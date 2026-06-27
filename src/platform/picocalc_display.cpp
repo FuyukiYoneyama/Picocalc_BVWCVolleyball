@@ -72,12 +72,16 @@ void write_commandn(uint8_t cmd, const uint8_t* data, size_t len) {
 }
 
 void reset_panel() {
+    // The ST7365P needs well over 100 ms after a hardware reset before it
+    // reliably accepts the init sequence.  The shorter delay inherited from the
+    // "life" driver could leave the panel un-initialised (blank) and in a state
+    // later apps could not recover; the Picocalc_Clock baseline uses 200 ms.
     gpio_put(board::kLcdPinRst, 1);
-    sleep_ms(1);
+    sleep_ms(10);
     gpio_put(board::kLcdPinRst, 0);
     sleep_ms(10);
     gpio_put(board::kLcdPinRst, 1);
-    sleep_ms(10);
+    sleep_ms(200);
 }
 
 // CASET / PASET expect inclusive end coordinates, then RAMWR opens the stream.
