@@ -1,0 +1,5 @@
+# The game sketch is downloaded at build time and must not be committed
+# (upstream license is unclear).  Ignore any local sketch copy placed here.
+*.cpp
+*.ino
+!README.md

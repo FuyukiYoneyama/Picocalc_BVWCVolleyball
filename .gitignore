@@ -1,0 +1,10 @@
+# Build output (also contains the game sketch downloaded at build time, which
+# must never be committed).
+/build/
+/build*/
+**/build/
+
+# Editor / OS noise
+*.swp
+*~
+.DS_Store
