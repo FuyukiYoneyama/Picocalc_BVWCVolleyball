@@ -138,8 +138,20 @@ logging each step on UART:
 cmake -S . -B build -G Ninja -DPCVB_LCD_SELFTEST=1 && cmake --build build
 ```
 
-If even the colour fills don't appear, the backlight may be off — adjust
-brightness with the PicoCalc's own keys (the app never changes it).
+If even the colour fills don't appear, the **LCD backlight is off** (the panel
+is drawing fine, you just can't see it). This app never changes the backlight,
+so:
+
+- **Stock PicoCalc:** the keyboard firmware can't dim the backlight all the way
+  off, so this shouldn't happen — just raise brightness with the keyboard keys.
+- **Modified keyboard firmware that allows backlight = 0** (e.g. a build where
+  Clock can switch the LCD fully off with the power button): if you turned the
+  LCD off in another app and then start this game *without a power cycle*, the
+  backlight stays off and the screen is black. Fix it by **power-cycling**
+  (the firmware restores the backlight to its default on boot via `reg_init()`),
+  or raise brightness with the keyboard keys. This game deliberately leaves the
+  shared keyboard controller untouched, so it won't turn the backlight back on
+  for you.
 
 ---
 
@@ -209,9 +221,11 @@ scaling keeps pixels crisp and the full frame transfers comfortably within the
   `tone()` beeps), generated directly by the PWM slice. There is no DMA mixer;
   none is needed for this game.
 - **The LCD backlight is never changed.** The app does not write the shared
-  keyboard-controller backlight register, so your brightness setting is left
-  alone (and the bootloader / other apps are not disturbed). If the screen is
-  dark, adjust brightness with the PicoCalc's own keys.
+  keyboard-controller backlight register, so your brightness is left alone (and
+  the bootloader / other apps are not disturbed). On stock firmware the backlight
+  can't be fully off, so the screen is always visible. Only on modified keyboard
+  firmware that allows backlight = 0 can the screen be black (if another app
+  turned it off); see Troubleshooting for the power-cycle fix.
 - Warnings from the downloaded sketch (e.g. unused variables like `pointScored`
   / `beachNamesFull`) are suppressed for that translation unit only, since it is
   third-party code compiled verbatim; the port's own sources keep `-Wall
