@@ -8,5 +8,5 @@
 #pragma once
 
 // major.minor.patch-label
-#define PCVB_VERSION "1.1.3"
+#define PCVB_VERSION "1.1.4"
 #define PCVB_APP_NAME "picocalc_bvwc_volleyball"

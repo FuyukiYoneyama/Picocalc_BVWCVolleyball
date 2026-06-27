@@ -113,10 +113,10 @@ target_compile_options(picocalc_bvwc_volleyball PRIVATE
     -Wno-unused-parameter
 )
 
-# Run a one-shot LCD bring-up self-test at boot (R/G/B fills + a framebuffer
-# pattern) before starting the game.  On by default while bringing the display
-# up on real hardware; set -DPCVB_LCD_SELFTEST=0 to skip it.
-set(PCVB_LCD_SELFTEST 1 CACHE STRING "Run the LCD self-test at boot (1/0)")
+# Optional one-shot LCD bring-up self-test at boot (R/G/B fills + a framebuffer
+# pattern) before starting the game.  Off by default; enable for hardware
+# display debugging with -DPCVB_LCD_SELFTEST=1.
+set(PCVB_LCD_SELFTEST 0 CACHE STRING "Run the LCD self-test at boot (1/0)")
 
 target_compile_definitions(picocalc_bvwc_volleyball PRIVATE
     PICO_DEFAULT_UART_BAUD_RATE=115200
