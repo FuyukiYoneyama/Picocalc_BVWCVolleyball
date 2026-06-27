@@ -2,8 +2,8 @@
  * Picocalc BVWC Volleyball - PicoCalc port.
  * SPDX-License-Identifier: MIT
  *
- * Central hardware constants for the PicoCalc.  Values follow
- * general/07_PIN_MAP.md and the proven `life` project on the same board.
+ * Central hardware constants for the PicoCalc.  Values follow the PicoCalc
+ * mainboard V2.0 schematic and the author's "life" project on the same board.
  */
 
 #pragma once
@@ -13,7 +13,7 @@
 namespace pcvb::board {
 
 // Run at 250 MHz like the other audio/video projects.  Must be set before
-// stdio / peripheral init (general/00_HARDWARE_OVERVIEW.md).
+// stdio / peripheral init.
 constexpr uint32_t kSystemClockKhz = 250000;
 constexpr uint32_t kUartBaudRate = 115200;
 

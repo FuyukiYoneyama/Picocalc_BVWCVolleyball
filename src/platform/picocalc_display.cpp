@@ -145,7 +145,7 @@ void init() {
     reset_panel();
 
     // ST7365P init.  0x3a=0x65 selects RGB565; 0x21 enables the inversion this
-    // panel needs.  (general/01_DISPLAY_LCD.md)
+    // panel needs.
     static const uint8_t b9[] = {0x02, 0xe0};
     static const uint8_t c0[] = {0x80, 0x06};
     static const uint8_t e8[] = {0x40, 0x8a, 0x00, 0x00, 0x29, 0x19, 0xaa, 0x33};

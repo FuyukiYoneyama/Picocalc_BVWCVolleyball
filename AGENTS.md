@@ -1,7 +1,9 @@
 # AGENTS — Picocalc BVWC Volleyball
 
-PicoCalc port of the Arduboy game **BVWCVolleyball** (melanjet). Read the
-shared PicoCalc notes in `../../../general/` before changing hardware code.
+PicoCalc port of the Arduboy game **BVWCVolleyball** (melanjet). Know the
+PicoCalc hardware basics before touching hardware code: ST7365P 320x320 RGB565
+LCD driven by PIO (CS/DC/RST on GPIO), an i2c1 keyboard controller at 0x1F, and
+PWM audio on GP26/GP27.
 
 ## Layout
 - `src/game/bvwc_volleyball.cpp` — the **original sketch, verbatim**. Do not
@@ -23,6 +25,6 @@ shared PicoCalc notes in `../../../general/` before changing hardware code.
 - One build dir: `build/`. Logs are UART0 @ 115200 8N1.
 
 ## Definition of Done
-See `general/10_PORTING_AND_DONE.md`. For this project: builds to
-`build/picocalc_bvwc_volleyball.uf2`, boots with version/build-id log, shows the
-title screen, accepts the mapped keys, and plays a full match without hanging.
+For this project: builds to `build/picocalc_bvwc_volleyball.uf2`, boots with a
+version/build-id UART log, shows the title screen, accepts the mapped keys, and
+plays a full match without hanging.

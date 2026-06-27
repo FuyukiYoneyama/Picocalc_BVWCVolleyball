@@ -33,8 +33,10 @@ then **scaled 2× and centred** on the 320×320 panel (a 256×128 image at origi
 
 ## Build
 
-Requires the Pico SDK and the `arm-none-eabi` toolchain (see
-`general/06_PROJECT_SETUP.md`).
+Requires the [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk),
+the `arm-none-eabi` GCC toolchain, CMake (3.18+) and Ninja. For toolchain setup
+see the official
+[Getting started with Raspberry Pi Pico](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf).
 
 ```sh
 export PICO_SDK_PATH=/path/to/pico-sdk
