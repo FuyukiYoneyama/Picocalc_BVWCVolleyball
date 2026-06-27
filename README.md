@@ -177,9 +177,17 @@ step per frame at 40 fps, so speed is tied to frame rate. This port uses the
 same model and the same 25 ms (40 fps) frame gate, so it **cannot run faster
 than the original**, and matches its pace as long as each frame's work (≈20 ms,
 dominated by the ~17 ms LCD transfer) fits the 25 ms budget — which it does, with
-headroom. To confirm on your own unit, build with `-DPCVB_FRAME_STATS=1` and
-watch the UART: `avg≈25000 us (40 fps)` means it matches the original; a larger
-average would mean it is running slow.
+headroom.
+
+**Measured on PicoCalc hardware** (build with `-DPCVB_FRAME_STATS=1`, which logs
+the frame period over UART) the frame period is `avg=25000 us (40 fps)` with a
+worst case of ~25.6 ms — i.e. it runs at the original's 40 fps pace, neither too
+fast nor too slow. Sample log:
+
+```
+[PERF] frame avg=25000 us (40 fps) worst=25026 us
+[PERF] frame avg=24999 us (40 fps) worst=25320 us
+```
 
 ### Screen-size handling
 
