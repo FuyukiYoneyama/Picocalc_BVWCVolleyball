@@ -20,9 +20,16 @@ export PICO_SDK_PATH=/path/to/pico-sdk
 cmake -S . -B build -G Ninja && cmake --build build
 ```
 
-Hold **BOOTSEL** on the Pico, plug in USB, and drag
-`build/picocalc_bvwc_volleyball.uf2` onto the `RPI-RP2` drive. Done — play with
-the **arrow keys** + **`[`** (jump/serve) and **`]`** (pause/back).
+Then flash `build/picocalc_bvwc_volleyball.uf2`, either way:
+
+- **USB / BOOTSEL:** hold **BOOTSEL**, plug in USB, drag the `.uf2` onto the
+  `RPI-RP2` drive.
+- **SD card ([UF2 Loader](https://github.com/pelrun/uf2loader)):** copy the
+  `.uf2` into the `pico1-apps` folder on the SD card (`pico2-apps` for a
+  Pico 2), then pick it from the loader menu (hold **Up** at power-on).
+
+Done — play with the **arrow keys** + **`[`** (jump/serve) and **`]`**
+(pause/back).
 
 Details, controls, other games, and licensing are below.
 
@@ -63,8 +70,16 @@ cmake --build build
 # Artifacts: build/picocalc_bvwc_volleyball.uf2 / .elf
 ```
 
-Flash by holding **BOOTSEL** on the Pico and copying
-`build/picocalc_bvwc_volleyball.uf2` to the `RPI-RP2` drive.
+Flash `build/picocalc_bvwc_volleyball.uf2` one of two ways:
+
+- **USB / BOOTSEL:** hold **BOOTSEL** on the Pico, plug in USB, and copy the
+  `.uf2` to the `RPI-RP2` drive.
+- **SD card via [UF2 Loader](https://github.com/pelrun/uf2loader):** if you run
+  the PicoCalc SD bootloader, just copy the `.uf2` into the SD card's
+  `pico1-apps` folder (or `pico2-apps` for a Pico 2 / 2 W — both can coexist),
+  then power on holding **Up** (or **F1** / **F5**) to open the menu and select
+  it. This port is a plain pico-sdk app and does not write to flash, so it runs
+  under UF2 Loader unmodified.
 
 ### The game sketch is downloaded, not bundled
 
