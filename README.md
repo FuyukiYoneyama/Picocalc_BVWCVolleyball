@@ -129,6 +129,18 @@ A correct configure prints `Check for working C compiler:
 .../arm-none-eabi-gcc`. If an IDE keeps re-configuring with the host kit, build
 from the CLI or select an `arm-none-eabi` kit.
 
+**Blank screen but you hear sound.** The program is running; the panel just
+isn't showing. Build with the LCD bring-up self-test to bisect it — it fills the
+screen red/green/blue and then draws a framebuffer pattern before the game,
+logging each step on UART:
+
+```sh
+cmake -S . -B build -G Ninja -DPCVB_LCD_SELFTEST=1 && cmake --build build
+```
+
+If even the colour fills don't appear, the backlight may be off — adjust
+brightness with the PicoCalc's own keys (the app never changes it).
+
 ---
 
 ## Controls (input mapping)
@@ -177,9 +189,14 @@ scaling keeps pixels crisp and the full frame transfers comfortably within the
 - **Audio is a single square-wave tone** (the sketch only uses simple
   `tone()` beeps), generated directly by the PWM slice. There is no DMA mixer;
   none is needed for this game.
-- The two compiler warnings during build (`pointScored` set-but-unused,
-  `beachNamesFull` unused) come from the **original sketch** and are left as-is
-  to keep the game code unmodified.
+- **The LCD backlight is never changed.** The app does not write the shared
+  keyboard-controller backlight register, so your brightness setting is left
+  alone (and the bootloader / other apps are not disturbed). If the screen is
+  dark, adjust brightness with the PicoCalc's own keys.
+- Warnings from the downloaded sketch (e.g. unused variables like `pointScored`
+  / `beachNamesFull`) are suppressed for that translation unit only, since it is
+  third-party code compiled verbatim; the port's own sources keep `-Wall
+  -Wextra`.
 
 ---
 
