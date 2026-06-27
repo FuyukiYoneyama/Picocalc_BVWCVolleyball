@@ -82,17 +82,11 @@ int main() {
     pcvb::keyboard::init();
     pcvb::audio::init();
 
-    // Respect the user's brightness: only turn the backlight on (to a moderate
-    // level, never max) if it powered up fully off, which would otherwise leave
-    // the screen black.  If it is already on at any level, leave it alone.
-    const uint8_t bl = pcvb::keyboard::read_backlight();
-    if (bl == 0) {
-        pcvb::keyboard::set_backlight(pcvb::board::kBacklightDefaultWhenOff);
-        pcvb::log_printf("BOOT", "backlight was off; set to %u",
-                         pcvb::board::kBacklightDefaultWhenOff);
-    } else {
-        pcvb::log_printf("BOOT", "backlight kept at %u", bl);
-    }
+    // We deliberately do NOT touch the keyboard controller's backlight register.
+    // It is a shared device (also used by the bootloader / other apps) whose
+    // state persists until power-off, and writing it on stock keyboard firmware
+    // can have firmware-dependent side effects.  Like life/Clock/NES, we leave
+    // the user's brightness exactly as it is.
 
     pcvb::log_printf("BOOT", "peripherals=ready scale=%dx region=%dx%d@(%d,%d)", pcvb::board::kScale,
                      pcvb::board::kBlitWidth, pcvb::board::kBlitHeight, pcvb::board::kBlitOriginX,

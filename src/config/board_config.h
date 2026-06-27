@@ -46,11 +46,6 @@ constexpr unsigned kKeyboardI2cScl = 7;
 constexpr uint32_t kKeyboardI2cHz = 400 * 1000;
 constexpr uint8_t kKeyboardI2cAddress = 0x1f;
 
-// Backlight handling: we do NOT override a brightness the user has already set.
-// Only when the panel powers up with the backlight fully off (reads 0, i.e. a
-// black screen) do we nudge it to this moderate, comfortable level - never max.
-constexpr uint8_t kBacklightDefaultWhenOff = 180;
-
 // PWM audio (schematic V2.0): left=GP26, right=GP27, same PWM slice.
 constexpr unsigned kAudioPwmLeft = 26;
 constexpr unsigned kAudioPwmRight = 27;
