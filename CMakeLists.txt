@@ -91,6 +91,11 @@ add_executable(picocalc_bvwc_volleyball
     src/platform/picocalc_uart_log.cpp
 )
 
+# The game sketch is third-party code compiled verbatim (we never modify it), so
+# silence its compiler warnings (e.g. unused variables) for that file only.  Our
+# own sources keep -Wall -Wextra.
+set_source_files_properties(${GAME_SOURCES} PROPERTIES COMPILE_OPTIONS "-w")
+
 # Generate the LCD PIO shifter header (lcd_spi_min.pio.h).
 pico_generate_pio_header(picocalc_bvwc_volleyball
     ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/lcd_spi_min.pio
