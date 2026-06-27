@@ -6,8 +6,10 @@ LCD driven by PIO (CS/DC/RST on GPIO), an i2c1 keyboard controller at 0x1F, and
 PWM audio on GP26/GP27.
 
 ## Layout
-- `src/game/bvwc_volleyball.cpp` — the **original sketch, verbatim**. Do not
-  refactor; the port works by keeping game logic byte-identical.
+- `src/game/` — **empty in the repo.** The game sketch is *not* bundled (its
+  license is unclear). `CMakeLists.txt` downloads a single `.ino` at configure
+  time and compiles it verbatim as C++; a local `*.cpp` dropped here overrides
+  the download (and is git-ignored). See `src/game/README.md`.
 - `src/compat/` — Arduboy2 / ArduboyTones / EEPROM / Arduino shims. Drawing and
   text routines are pixel-faithful reimplementations of Arduboy2.
 - `src/platform/` — PicoCalc drivers (LCD, keyboard, PWM audio, UART log),
@@ -16,8 +18,10 @@ PWM audio on GP26/GP27.
   hard-coded pin numbers elsewhere.
 
 ## Rules
-- Keep `src/game/*` unmodified except where a genuine Arduino/Pico API gap
-  forces a change (document any such change in the README).
+- Never commit the game sketch or any `build/` artifact: a built `.uf2`/`.elf`
+  contains the downloaded sketch, whose license is unclear. The port works by
+  compiling that sketch **verbatim** — don't fork/refactor it; absorb any
+  Arduino/Pico API gap in `src/compat/` instead (and note it in the README).
 - LCD contract: `set_window` → stream pixels → `wait_idle` before changing the
   window. Audio must stay non-blocking (`audio::service()` each loop iteration).
 - Bump `PCVB_VERSION` in `src/version.h` on any behavioural change; the boot log
