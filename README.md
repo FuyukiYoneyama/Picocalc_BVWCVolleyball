@@ -109,6 +109,26 @@ is compiled instead of downloading (that folder is git-ignored). See
 - Boot log prints app name, version, and build id.
 - Footprint: ~43 KB flash, ~3 KB RAM (fits the 264 KB SRAM comfortably).
 
+### Troubleshooting
+
+**Assembler errors in `boot2_w25q080.S` (`unknown pseudo-op '.syntax'`,
+`no such instruction 'ldr r3,=...'`, `expected (%rsi)`), and the failing
+command uses `/usr/bin/cc`.** Your `build/` directory was configured with the
+host x86 compiler instead of the ARM cross-compiler — usually because an IDE
+(e.g. VS Code CMake Tools) configured it first with a host "kit", or `cmake`
+ran once before `PICO_SDK_PATH` was set. The cached compiler is then reused.
+Fix it with a clean reconfigure from the command line:
+
+```sh
+rm -rf build
+cmake -S . -B build -G Ninja
+cmake --build build
+```
+
+A correct configure prints `Check for working C compiler:
+.../arm-none-eabi-gcc`. If an IDE keeps re-configuring with the host kit, build
+from the CLI or select an `arm-none-eabi` kit.
+
 ---
 
 ## Controls (input mapping)
