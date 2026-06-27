@@ -10,6 +10,24 @@ the PicoCalc platform drivers (LCD / keyboard / PWM audio).
 
 ---
 
+## Quick Start (just run it!)
+
+You need the Pico SDK + `arm-none-eabi` GCC + CMake + Ninja, and internet (the
+game sketch is fetched on the first `cmake`).
+
+```sh
+export PICO_SDK_PATH=/path/to/pico-sdk
+cmake -S . -B build -G Ninja && cmake --build build
+```
+
+Hold **BOOTSEL** on the Pico, plug in USB, and drag
+`build/picocalc_bvwc_volleyball.uf2` onto the `RPI-RP2` drive. Done — play with
+the **arrow keys** + **`[`** (jump/serve) and **`]`** (pause/back).
+
+Details, controls, other games, and licensing are below.
+
+---
+
 ## How it works
 
 ```
