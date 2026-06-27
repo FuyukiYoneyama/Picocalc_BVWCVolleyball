@@ -82,9 +82,8 @@ int main() {
     pcvb::keyboard::init();
     pcvb::audio::init();
 
-    // Force the LCD backlight on (some keyboard firmware powers up dark).
-    const bool bl = pcvb::keyboard::set_backlight(0xff);
-    pcvb::log_printf("BOOT", "backlight=max ok=%d", bl ? 1 : 0);
+    // Note: the LCD backlight is left untouched so the user's brightness setting
+    // is preserved.
 
     pcvb::log_printf("BOOT", "peripherals=ready scale=%dx region=%dx%d@(%d,%d)", pcvb::board::kScale,
                      pcvb::board::kBlitWidth, pcvb::board::kBlitHeight, pcvb::board::kBlitOriginX,
