@@ -21,10 +21,11 @@
 namespace pcvb::display {
 namespace {
 
-// 250 MHz sysclk / (2 * 2.0) = 62.5 MHz SPI-equivalent, matching the rate
-// proven on this panel by the NES port.  This gives enough transfer headroom
-// for a full 256x128 blit every frame at 40 fps.
-constexpr float kPioClkDiv = 2.0f;
+// 250 MHz sysclk / (2 * 4.0) = ~31.25 MHz SPI-equivalent.  This is the rate the
+// "life" project runs reliably on this exact panel/driver; a faster divider
+// (e.g. 2.0) can leave the panel blank.  A 256x128 blit (~64 KB) still fits the
+// 40 fps frame budget at this rate.
+constexpr float kPioClkDiv = 4.0f;
 PIO g_pio = pio0;
 uint g_sm = 0;
 uint g_pio_offset = 0;
