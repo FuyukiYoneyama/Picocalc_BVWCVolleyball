@@ -118,9 +118,14 @@ target_compile_options(picocalc_bvwc_volleyball PRIVATE
 # display debugging with -DPCVB_LCD_SELFTEST=1.
 set(PCVB_LCD_SELFTEST 0 CACHE STRING "Run the LCD self-test at boot (1/0)")
 
+# Log measured frame period / fps over UART (~every 2 s) to verify the game
+# runs at the original's 40 fps pace.  Off by default.
+set(PCVB_FRAME_STATS 0 CACHE STRING "Log frame timing over UART (1/0)")
+
 target_compile_definitions(picocalc_bvwc_volleyball PRIVATE
     PICO_DEFAULT_UART_BAUD_RATE=115200
     PCVB_LCD_SELFTEST=${PCVB_LCD_SELFTEST}
+    PCVB_FRAME_STATS=${PCVB_FRAME_STATS}
 )
 
 target_link_libraries(picocalc_bvwc_volleyball

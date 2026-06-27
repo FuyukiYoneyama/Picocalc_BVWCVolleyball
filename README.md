@@ -170,6 +170,17 @@ keyboard controller FIFO, drained every frame in `pollButtons()`.
 | `Arduboy2` graphics + 5×7 font  | Reimplemented pixel-identical in the compat layer         |
 | Game logic / AI / physics       | **Unchanged** (sketch downloaded & compiled verbatim)     |
 
+### Game speed
+
+The original is fixed-timestep: `setFrameRate(40)` advances exactly one physics
+step per frame at 40 fps, so speed is tied to frame rate. This port uses the
+same model and the same 25 ms (40 fps) frame gate, so it **cannot run faster
+than the original**, and matches its pace as long as each frame's work (≈20 ms,
+dominated by the ~17 ms LCD transfer) fits the 25 ms budget — which it does, with
+headroom. To confirm on your own unit, build with `-DPCVB_FRAME_STATS=1` and
+watch the UART: `avg≈25000 us (40 fps)` means it matches the original; a larger
+average would mean it is running slow.
+
 ### Screen-size handling
 
 The Arduboy is 128×64 (2:1). The PicoCalc panel is 320×320. We use an integer

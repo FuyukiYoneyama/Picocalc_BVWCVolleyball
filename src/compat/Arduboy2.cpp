@@ -19,6 +19,11 @@
 #include "platform/picocalc_display.h"
 #include "platform/picocalc_keyboard.h"
 #include "platform/picocalc_key_table.h"
+#include "platform/picocalc_uart_log.h"
+
+#ifndef PCVB_FRAME_STATS
+#define PCVB_FRAME_STATS 0
+#endif
 
 // Globals backing the compat objects.
 EEPROMClass EEPROM;
@@ -158,6 +163,31 @@ void Arduboy2::clear() {
 
 void Arduboy2::display() {
     pcvb::display::blit_arduboy(sBuffer_, kRgbWhite, kRgbBlack);
+
+#if PCVB_FRAME_STATS
+    // display() runs exactly once per rendered game frame, so the interval
+    // between calls is the real frame period.  The 40 fps gate caps this at
+    // ~25000 us; if a frame's work overruns the budget it rises above that.
+    // avg ~= 25000 us (40 fps) means the port matches the original's pace.
+    static uint32_t prev_us = 0, sum_us = 0, worst_us = 0, count = 0;
+    const uint32_t now = time_us_32();
+    if (prev_us != 0) {
+        const uint32_t dt = now - prev_us;
+        sum_us += dt;
+        if (dt > worst_us) worst_us = dt;
+        if (++count >= 80) {
+            const uint32_t avg = sum_us / count;
+            pcvb::log_printf("PERF", "frame avg=%lu us (%lu fps) worst=%lu us",
+                             static_cast<unsigned long>(avg),
+                             static_cast<unsigned long>(avg ? 1000000u / avg : 0),
+                             static_cast<unsigned long>(worst_us));
+            sum_us = 0;
+            worst_us = 0;
+            count = 0;
+        }
+    }
+    prev_us = now;
+#endif
 }
 
 void Arduboy2::display(bool clearBuffer) {
