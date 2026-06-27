@@ -28,5 +28,8 @@ void init();
 // Reads at most one FIFO event.  Returns false when no key is pending, when
 // I2C fails, or when the FIFO reports key code 0.
 bool read_event(KeyEvent* event);
+// Sets the LCD backlight level (0-255) via the keyboard controller register.
+// Call after init().  Returns false on I2C failure.
+bool set_backlight(uint8_t level);
 
 }  // namespace pcvb::keyboard
