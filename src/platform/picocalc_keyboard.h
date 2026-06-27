@@ -31,5 +31,8 @@ bool read_event(KeyEvent* event);
 // Sets the LCD backlight level (0-255) via the keyboard controller register.
 // Call after init().  Returns false on I2C failure.
 bool set_backlight(uint8_t level);
+// Reads the current LCD backlight level (0-255).  Returns 0 on I2C failure or
+// when the backlight is off.
+uint8_t read_backlight();
 
 }  // namespace pcvb::keyboard

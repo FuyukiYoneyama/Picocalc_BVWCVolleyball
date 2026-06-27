@@ -69,4 +69,12 @@ bool set_backlight(uint8_t level) {
     return i2c_write_blocking(i2c1, board::kKeyboardI2cAddress, data, 2, false) == 2;
 }
 
+uint8_t read_backlight() {
+    uint8_t d[2] = {0, 0};
+    if (!read_reg(kRegBacklight, d, sizeof(d))) {
+        return 0;
+    }
+    return d[1];
+}
+
 }  // namespace pcvb::keyboard
